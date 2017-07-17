@@ -24,19 +24,6 @@ $is_user_taking_course = WooThemes_Sensei_Utils::user_started_course( $post->ID,
 // Get User Meta
 wp_get_current_user();
 
-if ( ! is_user_logged_in() ) {
-	echo '<p>Du musst eingeloggt sein um diesen Kurs zu Starten</p>';
-	return;
-}
-
-if ( is_user_logged_in() && ! $is_user_taking_course ) {
-
-	echo '<p>Bitte Starte diesen Kurs um die Lektionen beginnen zu können</p>';
-	return;
-}
-
-
-
 // exit if no lessons exist
 if (  ! ( $total_lessons  > 0 ) ) {
     return;
@@ -46,7 +33,6 @@ $none_module_lessons = $woothemes_sensei->modules->get_none_module_lessons($post
 $course_modules = wp_get_post_terms($post->ID, $woothemes_sensei->modules->taxonomy);
 
 if ( 0 < $total_lessons ) {
-
 
     $html .= '<section class="course-lessons">';
         $html .= '<div class="course-lessons-inner">';
@@ -137,7 +123,19 @@ if ( 0 < $total_lessons ) {
                             } 
                             // End If Statement
 
-                            $html .= '<h2><a href="' . esc_url( get_permalink( $lesson_item->ID ) ) . '" title="' . esc_attr( sprintf( __( 'Start %s', 'boss-sensei' ), $lesson_item->post_title ) ) . '">';
+	                $url = esc_url( get_permalink( $lesson_item->ID ) );
+	                $class = '';
+	                if ( ! is_user_logged_in() ) {
+		                $url = '#TB_inline?width=600&height=550&inlineId=prandible-modal';
+		                $class = "thickbox";
+	                }
+
+	                if ( is_user_logged_in() && ! $is_user_taking_course ) {
+		                $url = '#TB_inline?width=600&height=550&inlineId=prandible-modal';
+		                $class = "thickbox";
+	                }
+
+	                $html .= '<h2><a class="' . $class . '" href="' . $url . '" title="' . esc_attr( sprintf( __( 'Start %s', 'boss-sensei' ), $lesson_item->post_title ) ) . '">';
 
                             if( apply_filters( 'sensei_show_lesson_numbers', $show_lesson_numbers ) ) {
                                 $html .= '<span class="lesson-number">' . $lesson_count . '. </span>';
@@ -170,6 +168,12 @@ if ( 0 < $total_lessons ) {
              * @since 1.9.0
              */
             do_action( 'sensei_single_course_inside_after_lesson', get_the_ID() );
+
+            ob_start();
+				Sensei_Course::the_course_enrolment_actions();
+			$enrolment_actions = ob_get_clean();
+
+		$html .=  '<div id="prandible-modal" style="display:none"><br><h2>Hoppla,</h2><br><p>du kannst dir erst die einzelnen Lektionen ansehen, wenn du diesen Kurs gestartet hast. Starte jetzt! Wenn du nicht weiterkommst, melde dich per Chat</p><br><p>' . $enrolment_actions . '</p></div>';
 
         $html .= '</div>';
     $html .= '</section>';
