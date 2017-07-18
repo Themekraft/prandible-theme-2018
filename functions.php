@@ -119,6 +119,7 @@ function prandible_the_course_enrolment_actions_redirect(){
 	}
 }
 
+// Redirect the Curese to the Lesson after become a member
 add_action( 'wp_head', 'prandible_the_course_enrolment_actions_course_start' );
 function prandible_the_course_enrolment_actions_course_start() {
 	global $post, $current_user, $woothemes_sensei;
@@ -148,11 +149,8 @@ function prandible_the_course_enrolment_actions_course_start() {
 
 					// If lesson is not completed do the redirect
 					if ( ! $single_lesson_complete ) {
-//						wp_redirect( get_permalink( $lesson_item->ID ) );
 						?>
-
 						<script type="text/javascript"> window.location = '<?php echo get_permalink( $lesson_item->ID ); ?>'; </script>
-
 						<?php
 					}
 				}
@@ -161,8 +159,15 @@ function prandible_the_course_enrolment_actions_course_start() {
 
 }
 
-function prandible_js() {
+// Add some custom CSS and JS to the Theme. This can become separate files and enquire correctly.
+// I tried the style.css and custom.css form trhe child theme but they did not have effect.
+function prandible_js_css() {
 ?>
+    <style>
+        form.lesson_button_form {
+            float: right;
+        }
+    </style>
     <script>
     jQuery(document).ready( function($) {
 
@@ -176,6 +181,10 @@ function prandible_js() {
 
 <?php
 }
-add_action( 'wp_head', 'prandible_js' );
+add_action( 'wp_head', 'prandible_js_css' );
 
+
+// Move the lesson Complete Button under the Video
+remove_action( 'sensei_single_lesson_content_inside_after', array('Sensei_Lesson', 'footer_quiz_call_to_action' ), 10);
+add_action( 'sensei_lesson_after_video', array('Sensei_Lesson', 'footer_quiz_call_to_action' ), 150);
 ?>

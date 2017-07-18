@@ -126,12 +126,12 @@ if ( 0 < $total_lessons ) {
 	                $url = esc_url( get_permalink( $lesson_item->ID ) );
 	                $class = '';
 	                if ( ! is_user_logged_in() ) {
-		                $url = '#TB_inline?width=600&height=550&inlineId=prandible-modal';
+		                $url = '#TB_inline?width=200&height=300&inlineId=prandible-modal';
 		                $class = "thickbox";
 	                }
 
 	                if ( is_user_logged_in() && ! $is_user_taking_course ) {
-		                $url = '#TB_inline?width=600&height=550&inlineId=prandible-modal';
+		                $url = '#TB_inline?width=200&height=300&inlineId=prandible-modal';
 		                $class = "thickbox";
 	                }
 
