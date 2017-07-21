@@ -12,11 +12,11 @@ Version: 		3.1
 
 /*
 
--- Stylesheet locations ---
+-- Stylesheet locations --
 
 Add your own customizations into /css/custom.css in this child theme.
 
-Parent styles are called from /buddyboss-inc/theme-functions.php in the 
+Parent styles are called from /buddyboss-inc/theme-functions.php in the
 parent theme and are located in /boss/css/ in the parent theme.
 
 
