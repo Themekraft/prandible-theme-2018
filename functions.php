@@ -176,6 +176,11 @@ function prandible_js_css() {
         href = article.find('a').attr("href")
 
         jQuery('.course-meta.course-enrolment div.status.in-progress').html('<a href="' + href + '">Mache Weiter</a>');
+
+
+        jQuery('.status.register a').attr("href", "/wp-login.php?action=register")
+
+
     });
     </script>
 
@@ -187,4 +192,25 @@ add_action( 'wp_head', 'prandible_js_css' );
 // Move the lesson Complete Button under the Video
 remove_action( 'sensei_single_lesson_content_inside_after', array('Sensei_Lesson', 'footer_quiz_call_to_action' ), 10);
 add_action( 'sensei_lesson_after_video', array('Sensei_Lesson', 'footer_quiz_call_to_action' ), 150);
-?>
+
+
+add_filter('buddyforms_wp_login_form', 'prandible_register_link');
+function prandible_register_link($wp_login_form){
+	$wp_login_form .= '<a href="/wp-login.php?action=register">Register</a>';
+	return $wp_login_form;
+}
+
+function custom_login_page() {
+ $new_login_page_url = home_url( '/login/' ); // new login page
+ global $pagenow;
+ if( $pagenow == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') {
+    wp_redirect($new_login_page_url);
+    exit;
+ }
+}
+
+if(!is_user_logged_in()){
+ add_action('init','custom_login_page');
+}
+
+
