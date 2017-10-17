@@ -30,6 +30,40 @@ You're the boss, so have fun editing!
     top: 100%;
     overflow: hidden;
     padding-top: 0;
+}
+
+
+/* POP UP - KURS STARTEN */
+#TB_window,
+#TB_ajaxContent {
+    width: 280px !important;
+    height: auto !important;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: initial !important;
+}
+#TB_window button.single_add_to_cart_button.button.alt {
+    width: auto;
+    padding: 15px;
+    font-size: 13px;
+}
+#TB_closeWindowButton .screen-reader-text {
+  opacity: 0;
+}
+#TB_window #thickbox-chat {
+  margin-bottom: 10px;
+  width: calc( 100% - 30px );
+  text-align: center;
+}
+#TB_window .course-meta .status {
+  width: calc( 100% - 30px );
+}
+#TB_window .register a {
+    padding: 10px;
+    color: #fff;
+    background: #e94244;
+    border-radius: 5px;
+}
 
 
 

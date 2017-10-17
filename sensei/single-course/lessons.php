@@ -38,7 +38,7 @@ if ( 0 < $total_lessons ) {
         $html .= '<div class="course-lessons-inner">';
 
             if (count($none_module_lessons) > 0) {
-                
+
                 $html .= '<header>';
 
                     $html .= '<h2>' . __( 'Lessons', 'boss-sensei' ) . '</h2>';
@@ -58,7 +58,7 @@ if ( 0 < $total_lessons ) {
             $lesson_count = 1;
             $lessons_completed = 0;
             $show_lesson_numbers = false;
-    
+
             /**
              * Actions just before the sensei single course lessons loop begins
              *
@@ -72,7 +72,7 @@ if ( 0 < $total_lessons ) {
             if( have_posts() ):
 
                 // start course lessons loop
-                while ( have_posts() ): the_post(); 
+                while ( have_posts() ): the_post();
 
                     global $post;
                     $lesson_item = $post;
@@ -120,7 +120,7 @@ if ( 0 < $total_lessons ) {
                                 $html .= '<span class="lesson-status in-progress"><i class="fa fa-spinner"></i></span>';
                             } else {
                                 $html .= '<span class="lesson-status not-started"><i class="fa fa-circle-o"></i></span>';
-                            } 
+                            }
                             // End If Statement
 
 	                $url = esc_url( get_permalink( $lesson_item->ID ) );
@@ -155,12 +155,12 @@ if ( 0 < $total_lessons ) {
 
                     $lesson_count++;
 
-                endwhile; // end course lessons loop 
+                endwhile; // end course lessons loop
 
             endif;
-    
+
             wp_reset_query();
-    
+
             /**
              * The hook is inside the course lesson on the single course. It is just before the lesson closing markup.
              * It fires for each lesson.
@@ -173,7 +173,13 @@ if ( 0 < $total_lessons ) {
 				Sensei_Course::the_course_enrolment_actions();
 			$enrolment_actions = ob_get_clean();
 
-		$html .=  '<div id="prandible-modal" style="display:none"><br><h2>Hoppla,</h2><br><p>du kannst dir erst die einzelnen Lektionen ansehen, wenn du diesen Kurs gestartet hast. Starte jetzt! Wenn du nicht weiterkommst, melde dich per Chat</p><br><p>' . $enrolment_actions . '</p></div>';
+		$html .=  '<div id="prandible-modal" style="display:none"><br><br><h2>Kurs Starten</h2><br><p>Starte diesen Kurs jetzt und <br>schau dir alle Lektionen an!</p>
+                  <br>
+                  <p>' . $enrolment_actions . '</p>
+
+                  <p id="thickbox-chat"><small><i class="fa fa-comments"></i> &nbsp; Fragen? Starte den Chat!</small></p>
+
+                  </div>';
 
         $html .= '</div>';
     $html .= '</section>';
