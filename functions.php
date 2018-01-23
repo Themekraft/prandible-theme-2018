@@ -124,11 +124,6 @@ add_action( 'wp_head', 'prandible_the_course_enrolment_actions_course_start' );
 function prandible_the_course_enrolment_actions_course_start() {
 	global $post, $current_user, $woothemes_sensei;
 
-	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
-	if ( $buddyforms_registration_page != 'none' &&  $post->ID == $buddyforms_registration_page ) {
-		return;
-	}
-
 	// Check if the user is taking the course
 	$is_user_taking_course = Sensei_Utils::user_started_course( $post->ID, $current_user->ID );
 
@@ -199,7 +194,7 @@ remove_action( 'sensei_single_lesson_content_inside_after', array('Sensei_Lesson
 add_action( 'sensei_lesson_after_video', array('Sensei_Lesson', 'footer_quiz_call_to_action' ), 150);
 
 
-//add_filter('buddyforms_wp_login_form', 'prandible_register_link');
+add_filter('buddyforms_wp_login_form', 'prandible_register_link');
 function prandible_register_link($wp_login_form){
 	$wp_login_form .= '<a href="/wp-login.php?action=register">Register</a>';
 	return $wp_login_form;
@@ -220,10 +215,7 @@ if(!is_user_logged_in()){
 
 
 // Redirect to profile after login
-// add_filter("login_redirect","prandible_redirect_to_profile",10,3);
+add_filter("login_redirect","prandible_redirect_to_profile",9999,3);
 function prandible_redirect_to_profile( $redirect_to, $redirect_to_raw, $user ) {
-
-	$redirect_to = bp_core_get_user_domain( $user->ID );
-
-	return $redirect_to;
+	return bp_core_get_user_domain($user->ID );
 }

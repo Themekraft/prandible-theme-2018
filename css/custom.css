@@ -142,7 +142,7 @@ You're the boss, so have fun editing!
 
 }/* don't delete this closing bracket */
 
-/*.buddyforms-info {*/
-/*display: none;*/
-/*}*/
+.buddyforms-info {
+display: none;
+}
 
